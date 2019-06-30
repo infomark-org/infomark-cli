@@ -33,8 +33,8 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/cgtuebingen/infomark-backend/api/app"
 	"github.com/fatih/color"
+	"github.com/infomark-org/infomark-backend/api/app"
 	"golang.org/x/crypto/ssh/terminal"
 )
 

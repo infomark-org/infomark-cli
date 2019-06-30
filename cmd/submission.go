@@ -22,7 +22,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/cgtuebingen/infomark-backend/api/helper"
+	"github.com/infomark-org/infomark-backend/api/helper"
 	"github.com/spf13/cobra"
 )
 

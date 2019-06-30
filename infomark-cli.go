@@ -21,7 +21,7 @@
 package main
 
 import (
-	"github.com/cgtuebingen/infomark-cli/cmd"
+	"github.com/infomark-org/infomark-cli/cmd"
 )
 
 func main() {

@@ -21,7 +21,7 @@ import (
 	"log"
 	"strconv"
 
-	"github.com/cgtuebingen/infomark-cli/bridge"
+	"github.com/infomark-org/infomark-cli/bridge"
 )
 
 // H is a neat alias

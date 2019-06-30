@@ -21,7 +21,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/cgtuebingen/infomark-cli/bridge"
+	"github.com/infomark-org/infomark-cli/bridge"
 	"github.com/spf13/cobra"
 )
 
