@@ -18,8 +18,7 @@
 package cmd
 
 import (
-	"fmt"
-
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -30,7 +29,9 @@ var pingCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		w := remote.Get("/api/v1/ping")
 		defer w.Close()
-		fmt.Println(w.Plain())
+		if w.OK() {
+			color.Green(w.Plain())
+		}
 	},
 }
 

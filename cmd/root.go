@@ -51,6 +51,4 @@ func init() {
 	conn = &bridge.Connection{}
 	conn.RequireURL()
 	remote = &bridge.Bridge{Connection: conn}
-
-	fmt.Println("init")
 }

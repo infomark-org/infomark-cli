@@ -102,6 +102,7 @@ environment variable "INFOMARK_PASSWORD"`)
 				"plain_password": pass,
 			},
 		)
+		defer w.Close()
 
 		if w.OK() {
 			credentials := app.AuthResponse{}
