@@ -135,7 +135,11 @@ func (pr *ParsedResponse) Plain() string {
 }
 
 func (pr *ParsedResponse) DecodeJSON(target interface{}) error {
-  return json.NewDecoder(pr.Response.Body).Decode(target)
+  err := json.NewDecoder(pr.Response.Body).Decode(target)
+  if err != nil {
+    log.Fatal(err)
+  }
+  return err
 }
 
 func (pr *ParsedResponse) PrintCode() {
