@@ -1,0 +1,54 @@
+---
+kind: pipeline
+name: default
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: fmt
+  pull: default
+  image: patwie/goimports:v1
+  commands:
+  - "[ 0 -eq `goimports -l . | wc -l` ]"
+
+- name: lint
+  image: golangci/golangci-lint:v1.16
+  pull: true
+  commands:
+    - golangci-lint run -D errcheck --deadline=10m
+
+- name: build
+  pull: default
+  image: golang
+  commands:
+  - go version
+  - go build infomark-cli.go
+  environment:
+    GOPROXY: https://gomods.patwie.com/
+
+- name: create_release
+  pull: default
+  image: patwie/tar
+  commands:
+    - tar -czvf infomark-cli.tar.gz infomark-cli README.md LICENSE
+
+- name: publish_release
+  image: plugins/github-release
+  settings:
+    api_key:
+      from_secret: github_token
+    files:
+      - infomark-cli.tar.gz
+    checksum:
+      - md5
+      - sha256
+  when:
+    event: tag
+
+---
+kind: signature
+hmac: 26ad32c04acbeb7a1a4549a2b5e7da9a611bb5999742955cbb702bf878cf3695
+
+...
