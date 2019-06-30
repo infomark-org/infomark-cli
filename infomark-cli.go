@@ -21,9 +21,9 @@
 package main
 
 import (
-  "github.com/cgtuebingen/infomark-cli/cmd"
+	"github.com/cgtuebingen/infomark-cli/cmd"
 )
 
 func main() {
-  cmd.Execute()
+	cmd.Execute()
 }

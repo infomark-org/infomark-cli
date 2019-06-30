@@ -18,22 +18,22 @@
 package cmd
 
 import (
-  "fmt"
+	"fmt"
 
-  "github.com/spf13/cobra"
+	"github.com/spf13/cobra"
 )
 
 // pingCmd represents the serve command
 var pingCmd = &cobra.Command{
-  Use:   "ping",
-  Short: "tests if endpoint is available",
-  Run: func(cmd *cobra.Command, args []string) {
-    w := remote.Get("/api/v1/ping")
-    defer w.Close()
-    fmt.Println(w.Plain())
-  },
+	Use:   "ping",
+	Short: "tests if endpoint is available",
+	Run: func(cmd *cobra.Command, args []string) {
+		w := remote.Get("/api/v1/ping")
+		defer w.Close()
+		fmt.Println(w.Plain())
+	},
 }
 
 func init() {
-  RootCmd.AddCommand(pingCmd)
+	RootCmd.AddCommand(pingCmd)
 }

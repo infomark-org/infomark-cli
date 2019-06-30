@@ -18,73 +18,73 @@
 package cmd
 
 import (
-  "fmt"
+	"fmt"
 
-  "github.com/cgtuebingen/infomark-backend/api/app"
-  "github.com/spf13/cobra"
+	"github.com/cgtuebingen/infomark-backend/api/app"
+	"github.com/spf13/cobra"
 )
 
 // meCmd
 var meCmd = &cobra.Command{
-  Use:   "me",
-  Short: "Show my account information",
-  Run: func(cmd *cobra.Command, args []string) {
-    conn.RequireCredentials()
-    w := remote.Get("/api/v1/account", conn)
-    defer w.Close()
+	Use:   "me",
+	Short: "Show my account information",
+	Run: func(cmd *cobra.Command, args []string) {
+		conn.RequireCredentials()
+		w := remote.Get("/api/v1/account", conn)
+		defer w.Close()
 
-    data := &app.UserResponse{}
-    w.DecodeJSON(data)
-    fmt.Println("ID            ", data.ID)
-    fmt.Println("FirstName     ", data.FirstName)
-    fmt.Println("LastName      ", data.LastName)
-    fmt.Println("AvatarURL     ", data.AvatarURL)
-    fmt.Println("Email         ", data.Email)
-    fmt.Println("StudentNumber ", data.StudentNumber)
-    fmt.Println("Semester      ", data.Semester)
-    fmt.Println("Subject       ", data.Subject)
-    fmt.Println("Language      ", data.Language)
-    fmt.Println("Root          ", data.Root)
-  },
+		data := &app.UserResponse{}
+		w.DecodeJSON(data)
+		fmt.Println("ID            ", data.ID)
+		fmt.Println("FirstName     ", data.FirstName)
+		fmt.Println("LastName      ", data.LastName)
+		fmt.Println("AvatarURL     ", data.AvatarURL)
+		fmt.Println("Email         ", data.Email)
+		fmt.Println("StudentNumber ", data.StudentNumber)
+		fmt.Println("Semester      ", data.Semester)
+		fmt.Println("Subject       ", data.Subject)
+		fmt.Println("Language      ", data.Language)
+		fmt.Println("Root          ", data.Root)
+	},
 }
 
 var userCmd = &cobra.Command{
-  Use:   "user",
-  Short: "Manage users",
+	Use:   "user",
+	Short: "Manage users",
 }
 
 var findCmd = &cobra.Command{
-  Use:   "find [query]",
-  Short: "find a user",
-  Args:  cobra.ExactArgs(1),
-  Run: func(cmd *cobra.Command, args []string) {
-    query := args[0]
+	Use:   "find [query]",
+	Short: "find a user",
+	Args:  cobra.ExactArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		query := args[0]
 
-    conn.RequireCredentials()
+		conn.RequireCredentials()
 
-    url := fmt.Sprintf("/api/v1/users/find?query=%s", query)
-    w := remote.Get(url, conn)
-    defer w.Close()
+		url := fmt.Sprintf("/api/v1/users/find?query=%s", query)
+		w := remote.Get(url, conn)
+		defer w.Close()
 
-    users := []app.UserResponse{}
-    w.DecodeJSON(&users)
+		users := []app.UserResponse{}
+		w.DecodeJSON(&users)
 
-    fmt.Printf("found %v users matching %s\n", len(users), query)
-    for k, user := range users {
-      fmt.Printf("%4d %20s %20s %50s\n",
-        user.ID, user.FirstName, user.LastName, user.Email)
-      if k%10 == 0 && k != 0 {
-        fmt.Println("")
-      }
-    }
+		fmt.Printf("found %v users matching %s\n", len(users), query)
+		for k, user := range users {
+			fmt.Printf("%4d %20s %20s %50s\n",
+				user.ID, user.FirstName, user.LastName, user.Email)
+			if k%10 == 0 && k != 0 {
+				fmt.Println("")
+			}
+		}
 
-    fmt.Printf("found %v users matching %s\n", len(users), query)
-  },
+		fmt.Printf("found %v users matching %s\n", len(users), query)
+	},
 }
 
 func init() {
-  RootCmd.AddCommand(meCmd)
+	RootCmd.AddCommand(meCmd)
 
-  userCmd.AddCommand(findCmd)
-  RootCmd.AddCommand(userCmd)
+	userCmd.AddCommand(findCmd)
+	RootCmd.AddCommand(userCmd)
 }

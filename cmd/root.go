@@ -18,18 +18,18 @@
 package cmd
 
 import (
-  "fmt"
-  "os"
+	"fmt"
+	"os"
 
-  "github.com/cgtuebingen/infomark-cli/bridge"
-  "github.com/spf13/cobra"
+	"github.com/cgtuebingen/infomark-cli/bridge"
+	"github.com/spf13/cobra"
 )
 
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
-  Use:   "infomark-cli",
-  Short: "A CI based course framework",
-  Long: `InfoMark-CLI is a remote client for the is a a scalable, modern
+	Use:   "infomark-cli",
+	Short: "A CI based course framework",
+	Long: `InfoMark-CLI is a remote client for the is a a scalable, modern
 and open-source online course management system supporting auto-testing/grading
 of programming assignments and distributing exercise sheets.
 The infomark-server is the REST api backend for the course distributing system.
@@ -41,16 +41,16 @@ Complete documentation is available at https://infomark.org/.
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-  if err := RootCmd.Execute(); err != nil {
-    fmt.Println(err)
-    os.Exit(1)
-  }
+	if err := RootCmd.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 }
 
 func init() {
-  conn = &bridge.Connection{}
-  conn.RequireURL()
-  remote = &bridge.Bridge{Connection: conn}
+	conn = &bridge.Connection{}
+	conn.RequireURL()
+	remote = &bridge.Bridge{Connection: conn}
 
-  fmt.Println("init")
+	fmt.Println("init")
 }

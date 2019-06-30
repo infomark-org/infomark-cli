@@ -18,31 +18,31 @@
 package cmd
 
 import (
-  "log"
-  "strconv"
+	"log"
+	"strconv"
 
-  "github.com/cgtuebingen/infomark-cli/bridge"
+	"github.com/cgtuebingen/infomark-cli/bridge"
 )
 
 // H is a neat alias
 type H map[string]interface{}
 
 func MustInt64Parameter(argStr string, name string) int64 {
-  argInt, err := strconv.Atoi(argStr)
-  if err != nil {
-    log.Fatalf("cannot convert %s '%s' to int64\n", name, argStr)
-    return int64(0)
-  }
-  return int64(argInt)
+	argInt, err := strconv.Atoi(argStr)
+	if err != nil {
+		log.Fatalf("cannot convert %s '%s' to int64\n", name, argStr)
+		return int64(0)
+	}
+	return int64(argInt)
 }
 
 func MustIntParameter(argStr string, name string) int {
-  argInt, err := strconv.Atoi(argStr)
-  if err != nil {
-    log.Fatalf("cannot convert %s '%s' to int\n", name, argStr)
-    return int(0)
-  }
-  return int(argInt)
+	argInt, err := strconv.Atoi(argStr)
+	if err != nil {
+		log.Fatalf("cannot convert %s '%s' to int\n", name, argStr)
+		return int(0)
+	}
+	return int(argInt)
 }
 
 var conn *bridge.Connection

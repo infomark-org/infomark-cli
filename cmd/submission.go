@@ -19,50 +19,50 @@
 package cmd
 
 import (
-  "fmt"
-  "log"
+	"fmt"
+	"log"
 
-  "github.com/cgtuebingen/infomark-backend/api/helper"
-  "github.com/spf13/cobra"
+	"github.com/cgtuebingen/infomark-backend/api/helper"
+	"github.com/spf13/cobra"
 )
 
 var submissionCmd = &cobra.Command{
-  Use:   "submission",
-  Short: "Manage submissions",
+	Use:   "submission",
+	Short: "Manage submissions",
 }
 
 // meCmd
 var uploadCmd = &cobra.Command{
-  Use:   "upload [courseID] [taskID] [userID] [filename]",
-  Short: "Upload a submission on behalf of a student",
-  Args:  cobra.ExactArgs(4),
-  Run: func(cmd *cobra.Command, args []string) {
+	Use:   "upload [courseID] [taskID] [userID] [filename]",
+	Short: "Upload a submission on behalf of a student",
+	Args:  cobra.ExactArgs(4),
+	Run: func(cmd *cobra.Command, args []string) {
 
-    courseID := MustInt64Parameter(args[0], "courseID")
-    taskID := MustInt64Parameter(args[1], "taskID")
-    userID := MustInt64Parameter(args[2], "userID")
-    filename := args[3]
-    if !helper.FileExists(filename) {
-      log.Fatalf("File %s does not exist", filename)
-    }
+		courseID := MustInt64Parameter(args[0], "courseID")
+		taskID := MustInt64Parameter(args[1], "taskID")
+		userID := MustInt64Parameter(args[2], "userID")
+		filename := args[3]
+		if !helper.FileExists(filename) {
+			log.Fatalf("File %s does not exist", filename)
+		}
 
-    conn.RequireCredentials()
+		conn.RequireCredentials()
 
-    url := fmt.Sprintf("/api/v1/courses/%v/tasks/%v/submission", courseID, taskID)
-    params := map[string]string{
-      "user_id": fmt.Sprintf("%v", userID),
-    }
+		url := fmt.Sprintf("/api/v1/courses/%v/tasks/%v/submission", courseID, taskID)
+		params := map[string]string{
+			"user_id": fmt.Sprintf("%v", userID),
+		}
 
-    w, err := remote.UploadWithParameters(url, filename, "application/zip", params, conn)
-    if err != nil {
-      log.Fatal(err)
-    }
-    defer w.Close()
-    fmt.Println(w.Response.Status)
-  },
+		w, err := remote.UploadWithParameters(url, filename, "application/zip", params, conn)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer w.Close()
+		fmt.Println(w.Response.Status)
+	},
 }
 
 func init() {
-  submissionCmd.AddCommand(uploadCmd)
-  RootCmd.AddCommand(submissionCmd)
+	submissionCmd.AddCommand(uploadCmd)
+	RootCmd.AddCommand(submissionCmd)
 }
